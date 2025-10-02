@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quản lý Giảng viên"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:paddingBottom="12dp"/>
+
+    <EditText
+        android:minHeight="48dp"
+        android:id="@+id/edtMaGV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mã giảng viên"/>
+
+    <EditText
+        android:minHeight="48dp"
+        android:id="@+id/edtTenGV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tên giảng viên"/>
+
+    <Spinner
+        android:minHeight="48dp"
+        android:id="@+id/spinnerMonHoc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="8dp">
+
+        <Button
+            android:id="@+id/btnThem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thêm"/>
+
+        <Button
+            android:id="@+id/btnSua"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sửa"
+            android:layout_marginStart="8dp"/>
+
+        <Button
+            android:id="@+id/btnXoa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Xóa"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phân công giảng viên"
+        android:textStyle="bold"
+        android:layout_marginTop="12dp"/>
+
+    <Spinner
+        android:minHeight="48dp"
+        android:id="@+id/spinnerLopMonHoc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="8dp">
+
+        <Button
+            android:id="@+id/btnPhanCong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phân công"/>
+
+        <Button
+            android:id="@+id/btnBoPhanCong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bỏ phân công"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Danh sách Giảng viên"
+        android:textStyle="bold"
+        android:layout_marginTop="12dp"/>
+
+    <ListView
+        android:id="@+id/listGiangVien"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Danh sách Phân công"
+        android:textStyle="bold"
+        android:layout_marginTop="12dp"/>
+
+    <ListView
+        android:id="@+id/listPhanCong"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"/>
+</LinearLayout>

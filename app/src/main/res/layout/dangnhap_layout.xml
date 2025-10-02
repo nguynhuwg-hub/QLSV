@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+   android:background="@drawable/background1"
+    >
+    <LinearLayout
+        android:orientation="vertical"
+       android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/Khungdangnhap">
+
+        <TextView
+            android:id="@+id/tvDN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đăng nhập"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textColor="#4E4545">
+        </TextView>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/Khungdangnhap"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        >
+     <EditText
+         android:id="@+id/edtDN"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:hint="@string/tendangnhap"
+         android:drawableLeft="@drawable/user2"
+         android:drawablePadding="10dp"
+         android:background="#6D6767"
+         android:padding="20dp"
+         android:nextFocusDown="@id/edtMK">
+     </EditText>
+        <EditText
+            android:id="@+id/edtMK"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:drawableLeft="@drawable/password"
+            android:drawablePadding="10dp"
+            android:background="#6D6767"
+            android:padding="20dp"
+            android:layout_marginTop="20dp"
+            android:inputType="numberPassword"
+            android:imeOptions="actionDone">
+        </EditText>
+        <Button
+            android:id="@+id/btnDN"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đăng nhập"
+            android:layout_marginTop="20dp"
+            android:padding="15dp"
+            android:backgroundTint="@color/black">
+
+        </Button>
+
+    </LinearLayout>
+
+</RelativeLayout>

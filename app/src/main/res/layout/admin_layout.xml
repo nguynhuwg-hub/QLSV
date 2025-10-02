@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Tiêu đề -->
+    <TextView
+        android:id="@+id/tvWelcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bảng điều khiển Admin"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:padding="12dp"
+        android:textColor="#000000" />
+
+    <!-- GridLayout chứa các chức năng -->
+    <GridLayout
+        android:id="@+id/gridMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="4"
+        android:alignmentMode="alignMargins"
+        android:padding="8dp"
+        android:useDefaultMargins="true">
+
+        <!-- Quản lý Sinh viên -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardSinhVien"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            card_view:cardCornerRadius="12dp"
+            card_view:cardElevation="6dp"
+            android:layout_columnWeight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:background="#3B83A4">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                  android:src="@drawable/sinhvien">
+
+                </ImageView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quản lý SV"
+                    android:textSize="19sp"
+                    android:paddingTop="8dp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Quản lý Giảng viên -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardGiangVien"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            card_view:cardCornerRadius="12dp"
+            card_view:cardElevation="6dp"
+            android:layout_columnWeight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:background="#CA3F3F">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/giangvien" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quản lý GV"
+                    android:textSize="19dp"
+                    android:paddingTop="8dp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Quản lý Lớp -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardLop"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            card_view:cardCornerRadius="12dp"
+            card_view:cardElevation="6dp"
+            android:layout_columnWeight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:background="#E7CB6B">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/class2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quản lý Lớp"
+                    android:textSize="19dp"
+                    android:paddingTop="8dp"
+                    android:textStyle="bold"
+                />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Quản lý Môn học -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardMonHoc"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            card_view:cardCornerRadius="12dp"
+            card_view:cardElevation="6dp"
+            android:layout_columnWeight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:background="@color/purple_200">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/book" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quản lý MH"
+                    android:textSize="19dp"
+                    android:paddingTop="8dp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Quản lý Tài khoản -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardTaiKhoan"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            card_view:cardCornerRadius="12dp"
+            card_view:cardElevation="6dp"
+            android:layout_columnWeight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:background="#AEE677">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/account" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tài khoản"
+                    android:textSize="19dp"
+                    android:paddingTop="8dp"
+                android:textStyle="bold"
+               />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </GridLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+        <Button
+            android:id="@+id/btnThoat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thoát"
+            android:padding="10dp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+</LinearLayout>

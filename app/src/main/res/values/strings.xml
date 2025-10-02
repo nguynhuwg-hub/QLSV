@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">project1</string>
+    <string name="tendangnhap">Tên đăng nhập </string>
+    <string name="password">Nhập password</string>
+    <string name="masvgv"> Nhập mã sinh viên / Giảng viên</string>
+</resources>
