@@ -73,14 +73,14 @@ public static String TB_Sinhvien_Diachi ="DiaChi";
                 "MaNganh TEXT PRIMARY KEY," +
                 "TenNganh TEXT NOT NULL)");
 
-        // Bảng Lớp
+       
         db.execSQL("CREATE TABLE Lop (" +
                 "MaLop TEXT PRIMARY KEY," +
                 "TenLop TEXT NOT NULL," +
                 "MaNganh TEXT," +
                 "FOREIGN KEY (MaNganh) REFERENCES Nganh(MaNganh))");
 
-        // Bảng Sinh viên
+
         db.execSQL("CREATE TABLE SinhVien (" +
                 "MaSV TEXT PRIMARY KEY," +
                 "HoTen TEXT NOT NULL," +
@@ -90,19 +90,19 @@ public static String TB_Sinhvien_Diachi ="DiaChi";
                 "MaLop TEXT," +
                 "FOREIGN KEY (MaLop) REFERENCES Lop(MaLop))");
 
-        // Bảng Môn học
+
         db.execSQL("CREATE TABLE MonHoc (" +
                 "MaMH TEXT PRIMARY KEY," +
                 "TenMH TEXT NOT NULL," +
                 "SoTinChi INTEGER NOT NULL)");
 
-        // Bảng Giảng viên
+
         db.execSQL("CREATE TABLE GiangVien (" +
                 "MaGV TEXT PRIMARY KEY," +
                 "HoTen TEXT NOT NULL," +
                 "BoMon TEXT)");
 
-        // Bảng Lớp môn học
+
         db.execSQL("CREATE TABLE LopMonHoc (" +
                 "MaLopMH TEXT PRIMARY KEY," +
                 "MaLop TEXT," +
@@ -112,7 +112,7 @@ public static String TB_Sinhvien_Diachi ="DiaChi";
                 "FOREIGN KEY (MaMH) REFERENCES MonHoc(MaMH)," +
                 "FOREIGN KEY (MaGV) REFERENCES GiangVien(MaGV))");
 
-        // Bảng Điểm
+
         db.execSQL("CREATE TABLE Diem (" +
                 "MaSV TEXT," +
                 "MaLopMH TEXT," +
@@ -123,7 +123,7 @@ public static String TB_Sinhvien_Diachi ="DiaChi";
                 "FOREIGN KEY (MaSV) REFERENCES SinhVien(MaSV)," +
                 "FOREIGN KEY (MaLopMH) REFERENCES LopMonHoc(MaLopMH))");
 
-        // Bảng Người dùng
+
             db.execSQL("CREATE TABLE NguoiDung (" +
                 "UserID INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "Username TEXT NOT NULL UNIQUE," +
@@ -135,54 +135,39 @@ public static String TB_Sinhvien_Diachi ="DiaChi";
                 "FOREIGN KEY (MaGV) REFERENCES GiangVien(MaGV))");
         db.execSQL("INSERT INTO Nganh (MaNganh, TenNganh) VALUES ('CNTT', 'Công nghệ thông tin')");
 
-        // =======================
-        // 2. Thêm Lớp thuộc ngành CNTT
-        // =======================
+
         db.execSQL("INSERT INTO Lop (MaLop, TenLop, MaNganh) VALUES ('L01', 'Lớp CNTT1', 'CNTT')");
 
-        // =======================
-        // 3. Thêm Sinh viên
-        // =======================
+
         db.execSQL("INSERT INTO SinhVien (MaSV, HoTen, NgaySinh, GioiTinh, DiaChi, MaLop) " +
                 "VALUES ('SV001', 'Nguyen Van A', '2003-05-12', 'Nam', 'Hà Nội', 'L01')");
 
-        // =======================
-        // 4. Thêm Giảng viên
-        // =======================
+
         db.execSQL("INSERT INTO GiangVien (MaGV, HoTen, BoMon) " +
                 "VALUES ('GV001', 'Tran Thi B', 'Cơ sở dữ liệu')");
 
-        // =======================
-        // 5. Thêm Môn học
-        // =======================
+
         db.execSQL("INSERT INTO MonHoc (MaMH, TenMH, SoTinChi) " +
                 "VALUES ('MH001', 'Cơ sở dữ liệu', 3)");
 
-        // =======================
-        // 6. Thêm Lớp môn học (L01 học môn MH001 do GV001 dạy)
-        // =======================
+
         db.execSQL("INSERT INTO LopMonHoc (MaLopMH, MaLop, MaMH, MaGV) " +
                 "VALUES ('LMH001', 'L01', 'MH001', 'GV001')");
 
-        // =======================
-        // 7. Thêm Điểm cho SV001
-        // =======================
         db.execSQL("INSERT INTO Diem (MaSV, MaLopMH, DiemTP, DiemThi, DiemTongKet) " +
                 "VALUES ('SV001', 'LMH001', 8.0, 7.5, 7.7)");
 
-        // =======================
-        // 8. Thêm Người dùng
-        // =======================
 
-        // Admin (không gắn MaSV hay MaGV)
+
+
         db.execSQL("INSERT INTO NguoiDung (Username, Password, Role) " +
                 "VALUES ('admin', '123456', 'Admin')");
 
-        // Sinh viên (gắn với MaSV = SV001)
+
         db.execSQL("INSERT INTO NguoiDung (Username, Password, Role, MaSV) " +
                 "VALUES ('sv001', '123456', 'SinhVien', 'SV001')");
 
-        // Giảng viên (gắn với MaGV = GV001)
+
         db.execSQL("INSERT INTO NguoiDung (Username, Password, Role, MaGV) " +
                 "VALUES ('gv001', '123456', 'GiangVien', 'GV001')");
     }

@@ -111,6 +111,12 @@ public class QuanlySinhvienActivity extends AppCompatActivity {
                 return;
             }
 
+            Cursor cursor = db.rawQuery("SELECT * FROM SinhVien WHERE MaSV = ?", new String[]{ma});
+            if (cursor.getCount() > 0) {
+                Toast.makeText(this, "Mã sinh viên đã tồn tại!", Toast.LENGTH_SHORT).show();
+                cursor.close();
+                return; // Dừng lại, không thêm nữa
+            }
             ContentValues values = new ContentValues();
             values.put("MaSV", ma);
             values.put("HoTen", ten);
@@ -126,6 +132,7 @@ public class QuanlySinhvienActivity extends AppCompatActivity {
                 Toast.makeText(this, "Thêm thành công!", Toast.LENGTH_SHORT).show();
                 loadSinhVien();
             }
+
         });
 
         // Sửa
