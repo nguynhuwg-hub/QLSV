@@ -64,7 +64,7 @@ public static String TB_Sinhvien_Diachi ="DiaChi";
 
 
     public CreateDatabase(@Nullable Context context) {
-        super(context,"QLSV", null,3);
+        super(context,"QLSV", null,5);
     }
 
     @Override
@@ -142,6 +142,8 @@ public static String TB_Sinhvien_Diachi ="DiaChi";
         db.execSQL("INSERT INTO SinhVien (MaSV, HoTen, NgaySinh, GioiTinh, DiaChi, MaLop) " +
                 "VALUES ('SV001', 'Nguyen Van A', '2003-05-12', 'Nam', 'Hà Nội', 'L01')");
 
+        db.execSQL("INSERT INTO SinhVien (MaSV, HoTen, NgaySinh, GioiTinh, DiaChi, MaLop) " +
+                "VALUES ('SV002', 'Nguyen Van B', '2003-05-12', 'Nam', 'Hà Nội', 'L01')");
 
         db.execSQL("INSERT INTO GiangVien (MaGV, HoTen, BoMon) " +
                 "VALUES ('GV001', 'Tran Thi B', 'Cơ sở dữ liệu')");
@@ -157,6 +159,8 @@ public static String TB_Sinhvien_Diachi ="DiaChi";
         db.execSQL("INSERT INTO Diem (MaSV, MaLopMH, DiemTP, DiemThi, DiemTongKet) " +
                 "VALUES ('SV001', 'LMH001', 8.0, 7.5, 7.7)");
 
+        db.execSQL("INSERT INTO Diem (MaSV, MaLopMH, DiemTP, DiemThi, DiemTongKet) " +
+                "VALUES ('SV002', 'LMH001', 9.0, 8.0, 7.7)");
 
 
 
@@ -166,6 +170,9 @@ public static String TB_Sinhvien_Diachi ="DiaChi";
 
         db.execSQL("INSERT INTO NguoiDung (Username, Password, Role, MaSV) " +
                 "VALUES ('sv001', '123456', 'SinhVien', 'SV001')");
+
+        db.execSQL("INSERT INTO NguoiDung (Username, Password, Role, MaSV) " +
+                "VALUES ('sv002', '123456', 'SinhVien', 'SV002')");
 
 
         db.execSQL("INSERT INTO NguoiDung (Username, Password, Role, MaGV) " +

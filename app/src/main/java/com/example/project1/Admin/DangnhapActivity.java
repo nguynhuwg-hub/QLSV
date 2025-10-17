@@ -21,49 +21,79 @@ import com.example.project1.database.CreateDatabase;
 public class DangnhapActivity extends AppCompatActivity {
     CreateDatabase createDatabase;
     Button btnDN;
-    EditText edtDN , edtMK;
+    EditText edtDN, edtMK;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dangnhap_layout);
-        edtDN = (EditText) findViewById(R.id.edtDN);
-        edtMK = (EditText) findViewById(R.id.edtMK);
-        btnDN = (Button) findViewById(R.id.btnDN);
-        createDatabase = new CreateDatabase(this);
-        btnDN.setOnClickListener(v -> {                                  // (7)
-            String username = edtDN.getText().toString().trim();     // (8)
-            String password = edtMK.getText().toString().trim();     // (9)
 
-            if (username.isEmpty() || password.isEmpty()) {                // (10)
-                Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show(); // (11)
-                return;                                                    // (12)
+        edtDN = findViewById(R.id.edtDN);
+        edtMK = findViewById(R.id.edtMK);
+        btnDN = findViewById(R.id.btnDN);
+        createDatabase = new CreateDatabase(this);
+
+        btnDN.setOnClickListener(v -> {
+            String username = edtDN.getText().toString().trim();
+            String password = edtMK.getText().toString().trim();
+
+            if (username.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                return;
             }
 
             SQLiteDatabase db = createDatabase.getReadableDatabase();
-            Log.d("DB_TEST", "Username nhập: " + username + " - Password nhập: " + password);
-            // (13)
+
             Cursor cursor = db.rawQuery(
-                    "SELECT Role FROM NguoiDung WHERE Username=? AND Password=?",
-                    new String[]{username, password});                         // (14)
+                    "SELECT Role, MaSV, MaGV FROM NguoiDung WHERE Username=? AND Password=?",
+                    new String[]{username, password});
 
-            if (cursor.moveToFirst()) {                                   // (15)
-                String role = cursor.getString(0);                        // (16)
-                Toast.makeText(this, "Đăng nhập thành công: " + role, Toast.LENGTH_SHORT).show(); // (17)
+            if (cursor != null && cursor.moveToFirst()) {
+                String role = cursor.getString(cursor.getColumnIndexOrThrow("Role"));
+                String maSV = cursor.getString(cursor.getColumnIndexOrThrow("MaSV"));
+                String maGV = cursor.getString(cursor.getColumnIndexOrThrow("MaGV"));
 
-                if (role.equalsIgnoreCase("Admin"))  {                               // (18)
-                    startActivity(new Intent(this, AdminActivity.class));  // (19)
-                } else if (role.equalsIgnoreCase("SinhVien")) {
-                    startActivity(new Intent(this, SinhvienActivity.class));
-                } else if (role.equalsIgnoreCase("GiangVien")) {
+                Log.d("DEBUG_LOGIN", "Role=" + role + ", MaSV=" + maSV + ", MaGV=" + maGV);
+
+                if ("Admin".equalsIgnoreCase(role)) {
+                    startActivity(new Intent(this, AdminActivity.class));
+
+                } else if ("SinhVien".equalsIgnoreCase(role)) {
+                    // kiểm tra maSV có null không
+                    if (maSV == null || maSV.isEmpty()) {
+                        Toast.makeText(this, "Không tìm thấy mã sinh viên", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    // Lấy tên sinh viên
+                    Cursor curSV = db.rawQuery(
+                            "SELECT HoTen FROM SinhVien WHERE MaSV=?",
+                            new String[]{maSV});
+                    String tenSV = "";
+                    if (curSV.moveToFirst()) {
+                        tenSV = curSV.getString(0);
+                    }
+                    curSV.close();
+
+                    Intent intent = new Intent(this, SinhvienActivity.class);
+                    intent.putExtra("MaSV", maSV);
+                    intent.putExtra("TenSV", tenSV);
+                    startActivity(intent);
+
+                } else if ("GiangVien".equalsIgnoreCase(role)) {
                     startActivity(new Intent(this, GiangvienActivity.class));
                 }
-                finish();                                                  // (20)
+
+                cursor.close();
+                db.close();
+                finish();
+
             } else {
-                Toast.makeText(this, "Sai tài khoản hoặc mật khẩu", Toast.LENGTH_SHORT).show(); // (21)
+                Toast.makeText(this, "Sai tài khoản hoặc mật khẩu", Toast.LENGTH_SHORT).show();
             }
 
-            cursor.close();                                               // (22)
+            cursor.close();
             db.close();
         });
-        }
+    }
 }

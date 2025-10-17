@@ -1,17 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="xin chao sinh viên"
-        android:layout_gravity="center"
-        android:layout_marginTop="100dp"
-        android:textSize="30dp">
+    android:padding="16dp"
+    tools:context=".Sinhvien.SinhvienActivity">
 
-    </TextView>
+    <TextView
+        android:id="@+id/tvWelcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Xin chào sinh viên!"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:padding="8dp" />
+
+    <TextView
+        android:id="@+id/tvThongTin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kết quả học tập:"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp" />
+
+    <ListView
+        android:id="@+id/lvDiem"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:dividerHeight="1dp" />
 
 </LinearLayout>
