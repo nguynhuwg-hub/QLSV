@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#F9F9F9">
+
+    <!-- Tiêu đề -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Quản lý Tài khoản"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="#4A148C"
+        android:layout_marginBottom="10dp"/>
+
+    <!-- Thanh tìm kiếm -->
+    <EditText
+        android:id="@+id/edtSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tìm kiếm tài khoản..."
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:padding="10dp"
+        android:layout_marginBottom="12dp"/>
+    <EditText
+        android:id="@+id/edtNhapTK"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="UserName"
+        android:padding="10dp"
+        android:layout_marginBottom="12dp" />
+    <EditText
+        android:id="@+id/edtNhapMK"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:padding="10dp"
+        android:layout_marginBottom="12dp" />
+    <Spinner
+        android:id="@+id/SpinnerMS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:padding="10dp"/>
+    <RadioGroup
+        android:id="@+id/radioGroupRole"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+
+        <RadioButton
+            android:id="@+id/rdoSinhVien"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Sinh Viên"
+            android:gravity="center" />
+
+        <RadioButton
+            android:id="@+id/rdoGiangVien"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Giảng Viên"
+            android:gravity="center" />
+
+    </RadioGroup>
+
+
+    <!-- Danh sách tài khoản -->
+    <ListView
+        android:id="@+id/lvTaiKhoan"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:dividerHeight="1dp" />
+
+    <!-- Các nút chức năng -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/btnThem"
+            android:text="Thêm"
+            android:backgroundTint="#4CAF50"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"/>
+
+        <Button
+            android:id="@+id/btnSua"
+            android:text="Sửa"
+            android:backgroundTint="#FFC107"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"/>
+
+        <Button
+            android:id="@+id/btnXoa"
+            android:text="Xóa"
+            android:backgroundTint="#F44336"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"/>
+
+        <Button
+            android:id="@+id/btnThoat"
+            android:text="Thoát"
+            android:backgroundTint="#6200EA"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>
+

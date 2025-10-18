@@ -55,8 +55,9 @@ public class AdminActivity extends AppCompatActivity {
                 Toast.makeText(this, "Quản lý môn học", Toast.LENGTH_SHORT).show()
         );
 
-        cardTaiKhoan.setOnClickListener(v ->
-                Toast.makeText(this, "Quản lý tài khoản", Toast.LENGTH_SHORT).show()
-        );
+        cardTaiKhoan.setOnClickListener(v -> {
+            Toast.makeText(this, "Quản lý tài khoản", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(AdminActivity.this, Quanlytaikhoan.class));
+        });
     }
 }

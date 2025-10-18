@@ -129,7 +129,7 @@ public static String TB_Sinhvien_Diachi ="DiaChi";
                 "Username TEXT NOT NULL UNIQUE," +
                 "Password TEXT NOT NULL," +
                 "Role TEXT CHECK(Role IN ('Admin','SinhVien','GiangVien')) NOT NULL," +
-                "MaSV TEXT," +
+                "MaSV TEXT,"  +
                 "MaGV TEXT," +
                 "FOREIGN KEY (MaSV) REFERENCES SinhVien(MaSV)," +
                 "FOREIGN KEY (MaGV) REFERENCES GiangVien(MaGV))");

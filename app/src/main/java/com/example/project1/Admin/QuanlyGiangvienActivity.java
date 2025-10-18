@@ -18,22 +18,7 @@ import com.example.project1.database.CreateDatabase;
 
 import java.util.ArrayList;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.*;
-import androidx.appcompat.app.AppCompatActivity;
-import com.example.project1.R;
-import java.util.ArrayList;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.*;
-import androidx.appcompat.app.AppCompatActivity;
-import java.util.ArrayList;
 
 public class QuanlyGiangvienActivity extends AppCompatActivity {
 
