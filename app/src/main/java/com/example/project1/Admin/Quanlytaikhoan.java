@@ -1,116 +1,96 @@
 package com.example.project1.Admin;
 
-import android.os.Bundle;
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
-import android.widget.Toast;
-
+import android.os.Bundle;
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.project1.R;
 import com.example.project1.database.CreateDatabase;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class Quanlytaikhoan extends AppCompatActivity {
 
-    EditText edtNhapTK, edtNhapMK, edtSearch;
-    Spinner spinnerMS;
-    RadioGroup radioGroupRole;
-    RadioButton rdoSinhVien, rdoGiangVien;
-    Button btnThem, btnSua, btnXoa, btnThoat;
-    ListView lvTaiKhoan;
+    EditText edtPassword, edtRole;
+    Button btnAdd, btnUpdate, btnDelete;
+    ListView listTaiKhoan;
+    Spinner spnUsername;
+    SQLiteDatabase db;
+    ArrayList<String> dsTaiKhoan = new ArrayList<>();
+    ArrayAdapter<String> adapter;
+    ArrayList<String> dsUser = new ArrayList<>();
+    ArrayAdapter<String> adapterUser;
     CreateDatabase dbHelper;
-    ArrayAdapter<String> taiKhoanAdapter;
-    List<String> listTaiKhoan, listTaiKhoanGoc;
+    String selectedUser = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quanlytaikhoan);
 
-        // Ánh xạ View
-        edtNhapTK = findViewById(R.id.edtNhapTK);
-        edtNhapMK = findViewById(R.id.edtNhapMK);
-        edtSearch = findViewById(R.id.edtSearch);
-        spinnerMS = findViewById(R.id.SpinnerMS);
-        radioGroupRole = findViewById(R.id.radioGroupRole);
-        rdoSinhVien = findViewById(R.id.rdoSinhVien);
-        rdoGiangVien = findViewById(R.id.rdoGiangVien);
-        btnThem = findViewById(R.id.btnThem);
-        btnSua = findViewById(R.id.btnSua);
-        btnXoa = findViewById(R.id.btnXoa);
-        btnThoat = findViewById(R.id.btnThoat);
-        lvTaiKhoan = findViewById(R.id.lvTaiKhoan);
+        // Ánh xạ view
+        spnUsername = findViewById(R.id.spnUsername);
+        edtPassword = findViewById(R.id.edtPassword);
+        edtRole = findViewById(R.id.edtRole);
+        btnAdd = findViewById(R.id.btnAdd);
+        btnUpdate = findViewById(R.id.btnUpdate);
+        btnDelete = findViewById(R.id.btnDelete);
+        listTaiKhoan = findViewById(R.id.listTaiKhoan);
+        edtRole.setEnabled(false); // Không cho sửa Role
 
+        // Mở database
         dbHelper = new CreateDatabase(this);
+        db = dbHelper.open();
 
-        // Mặc định load mã Sinh viên
-        loadSpinnerData("SinhVien");
+        // Load danh sách
+        loadUsernameList();
+        loadData();
 
-        // Khi chọn loại role thì load lại danh sách mã tương ứng
-        radioGroupRole.setOnCheckedChangeListener((group, checkedId) -> {
-            if (checkedId == R.id.rdoSinhVien)
-                loadSpinnerData("SinhVien");
-            else if (checkedId == R.id.rdoGiangVien)
-                loadSpinnerData("GiangVien");
-        });
+        // Khi bấm vào 1 tài khoản trong danh sách
+        listTaiKhoan.setOnItemClickListener((adapterView, view, i, l) -> {
+            String item = dsTaiKhoan.get(i);
+            String[] parts = item.split(" - ");
+            selectedUser = parts[0];
+            edtRole.setText(parts[1]);
 
-        // Load danh sách tài khoản
-        loadTaiKhoan();
-
-        // ====== Click ListView: Hiển thị thông tin để sửa ======
-        lvTaiKhoan.setOnItemClickListener((parent, view, position, id) -> {
-            String selected = listTaiKhoan.get(position);
-            String[] parts = selected.split(" - ");
-            if (parts.length >= 3) {
-                String user = parts[0];
-                String role = parts[1];
-                String ma = parts[2];
-
-                edtNhapTK.setText(user);
-
-                SQLiteDatabase db = dbHelper.getReadableDatabase();
-                Cursor cursor = db.rawQuery("SELECT Password FROM NguoiDung WHERE Username=?", new String[]{user});
-                if (cursor.moveToFirst()) edtNhapMK.setText(cursor.getString(0));
-                cursor.close();
-
-                if (role.equals("SinhVien")) rdoSinhVien.setChecked(true);
-                else if (role.equals("GiangVien")) rdoGiangVien.setChecked(true);
-
-                loadSpinnerData(role);
-
-                ArrayAdapter<String> adapter = (ArrayAdapter<String>) spinnerMS.getAdapter();
-                int index = adapter.getPosition(ma);
-                if (index >= 0) spinnerMS.setSelection(index);
+            Cursor c = db.rawQuery("SELECT Password FROM NguoiDung WHERE Username=?", new String[]{selectedUser});
+            if (c.moveToFirst()) {
+                edtPassword.setText(c.getString(0));
             }
+            c.close();
         });
 
-        // ====== Nút Thêm ======
-        btnThem.setOnClickListener(v -> {
-            String user = edtNhapTK.getText().toString().trim();
-            String pass = edtNhapMK.getText().toString().trim();
-            String role = getSelectedRole();
-            String ma = spinnerMS.getSelectedItem() != null ? spinnerMS.getSelectedItem().toString() : "";
+        // Nút thêm tài khoản
+        btnAdd.setOnClickListener(v -> {
+            String user = spnUsername.getSelectedItem() != null ? spnUsername.getSelectedItem().toString() : "";
+            String pass = edtPassword.getText().toString().trim();
 
             if (user.isEmpty() || pass.isEmpty()) {
-                Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Vui lòng chọn tài khoản và nhập mật khẩu!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
-            Cursor check = db.rawQuery("SELECT * FROM NguoiDung WHERE Username=?", new String[]{user});
+            // Xác định role dựa trên mã
+            String role = "";
+            Cursor checkSV = db.rawQuery("SELECT MaSV FROM SinhVien WHERE MaSV=?", new String[]{user});
+            if (checkSV.moveToFirst()) {
+                role = "SinhVien";
+            }
+            checkSV.close();
+
+            Cursor checkGV = db.rawQuery("SELECT MaGV FROM GiangVien WHERE MaGV=?", new String[]{user});
+            if (checkGV.moveToFirst()) {
+                role = "GiangVien";
+            }
+            checkGV.close();
+
+            // Nếu không khớp SV hoặc GV thì mặc định là Admin
+            if (role.isEmpty()) {
+                role = "Admin";
+            }
+
+            // Kiểm tra trùng Username
+            Cursor check = db.rawQuery("SELECT Username FROM NguoiDung WHERE Username=?", new String[]{user});
             if (check.moveToFirst()) {
                 Toast.makeText(this, "Tài khoản đã tồn tại!", Toast.LENGTH_SHORT).show();
                 check.close();
@@ -118,167 +98,91 @@ public class Quanlytaikhoan extends AppCompatActivity {
             }
             check.close();
 
-            ContentValues values = new ContentValues();
-            values.put("Username", user);
-            values.put("Password", pass);
-            values.put("Role", role);
+            // Thêm vào NguoiDung
+            db.execSQL("INSERT INTO NguoiDung (Username, Password, Role) VALUES (?, ?, ?)",
+                    new Object[]{user, pass, role});
 
-            if (role.equals("SinhVien")) {
-                values.put("MaSV", ma);
-                values.putNull("MaGV");
-            } else {
-                values.put("MaGV", ma);
-                values.putNull("MaSV");
-            }
+            Toast.makeText(this, "Đã thêm tài khoản cho " + role, Toast.LENGTH_SHORT).show();
 
-            long result = db.insert("NguoiDung", null, values);
-            if (result != -1) {
-                Toast.makeText(this, "Thêm thành công!", Toast.LENGTH_SHORT).show();
-                loadTaiKhoan();
-            } else {
-                Toast.makeText(this, "Lỗi khi thêm!", Toast.LENGTH_SHORT).show();
-            }
+            loadData();
+            loadUsernameList(); // Cập nhật spinner
         });
 
-        // ====== Nút Sửa ======
-        btnSua.setOnClickListener(v -> {
-            String user = edtNhapTK.getText().toString().trim();
-            String pass = edtNhapMK.getText().toString().trim();
-            String role = getSelectedRole();
-            String ma = spinnerMS.getSelectedItem() != null ? spinnerMS.getSelectedItem().toString() : "";
-
-            if (user.isEmpty()) {
-                Toast.makeText(this, "Vui lòng chọn tài khoản cần sửa!", Toast.LENGTH_SHORT).show();
+        // Nút sửa
+        btnUpdate.setOnClickListener(v -> {
+            if (selectedUser == null) {
+                Toast.makeText(this, "Hãy chọn tài khoản để sửa!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
-            ContentValues values = new ContentValues();
-            if (!pass.isEmpty()) values.put("Password", pass);
-            values.put("Role", role);
+            String pass = edtPassword.getText().toString().trim();
+            String role = edtRole.getText().toString().trim();
 
-            if (role.equals("SinhVien")) {
-                values.put("MaSV", ma);
-                values.putNull("MaGV");
-            } else {
-                values.put("MaGV", ma);
-                values.putNull("MaSV");
-            }
+            db.execSQL("UPDATE NguoiDung SET Password=?, Role=? WHERE Username=?",
+                    new Object[]{pass, role, selectedUser});
 
-            int rows = db.update("NguoiDung", values, "Username=?", new String[]{user});
-            if (rows > 0) {
-                Toast.makeText(this, "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
-                loadTaiKhoan();
-            } else {
-                Toast.makeText(this, "Không tìm thấy tài khoản!", Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(this, "Đã cập nhật tài khoản", Toast.LENGTH_SHORT).show();
+            loadData();
+            loadUsernameList();
         });
 
-        // ====== Nút Xóa ======
-        btnXoa.setOnClickListener(v -> {
-            String user = edtNhapTK.getText().toString().trim();
-            if (user.isEmpty()) {
-                Toast.makeText(this, "Chọn tài khoản cần xóa!", Toast.LENGTH_SHORT).show();
+        // Nút xóa
+        btnDelete.setOnClickListener(v -> {
+            if (selectedUser == null) {
+                Toast.makeText(this, "Hãy chọn tài khoản để xóa!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
-            db.delete("NguoiDung", "Username=?", new String[]{user});
-            Toast.makeText(this, "Đã xóa tài khoản!", Toast.LENGTH_SHORT).show();
-            loadTaiKhoan();
-        });
+            db.execSQL("DELETE FROM NguoiDung WHERE Username=?", new Object[]{selectedUser});
+            Toast.makeText(this, "Đã xóa tài khoản", Toast.LENGTH_SHORT).show();
 
-        // ====== Nút Thoát ======
-        btnThoat.setOnClickListener(v -> finish());
-
-        // ====== Tìm kiếm realtime ======
-        edtSearch.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-                filterTaiKhoan(s.toString());
-            }
-            @Override public void afterTextChanged(Editable s) {}
+            loadData();
+            loadUsernameList();
         });
     }
 
-    // ================== LOAD SPINNER ==================
-    private void loadSpinnerData(String role) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        List<String> list = new ArrayList<>();
-        Cursor cursor;
-
-        if (role.equals("GiangVien"))
-            cursor = db.rawQuery("SELECT MaGV FROM GiangVien", null);
-        else
-            cursor = db.rawQuery("SELECT MaSV FROM SinhVien", null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                list.add(cursor.getString(0));
-            } while (cursor.moveToNext());
+    // Load danh sách tài khoản vào ListView
+    private void loadData() {
+        dsTaiKhoan.clear();
+        Cursor c = db.rawQuery("SELECT Username, Role FROM NguoiDung", null);
+        while (c.moveToNext()) {
+            dsTaiKhoan.add(c.getString(0) + " - " + c.getString(1));
         }
-        cursor.close();
+        c.close();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, list);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerMS.setAdapter(adapter);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dsTaiKhoan);
+        listTaiKhoan.setAdapter(adapter);
+
+        edtPassword.setText("");
+        edtRole.setText("");
+        selectedUser = null;
     }
 
-    // ================== LOAD LISTVIEW ==================
-    private void loadTaiKhoan() {
-        if (listTaiKhoan == null) listTaiKhoan = new ArrayList<>();
-        listTaiKhoan.clear();
+    // Load danh sách SV + GV chưa có tài khoản
+    private void loadUsernameList() {
+        dsUser.clear();
 
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT Username, Role, MaSV, MaGV FROM NguoiDung", null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                String user = cursor.getString(0);
-                String role = cursor.getString(1);
-                String maSV = cursor.getString(2);
-                String maGV = cursor.getString(3);
-
-                String ma = "-";
-                if ("SinhVien".equals(role) && maSV != null) ma = maSV;
-                else if ("GiangVien".equals(role) && maGV != null) ma = maGV;
-
-                listTaiKhoan.add(user + " - " + role + " - " + ma);
-            } while (cursor.moveToNext());
+        // Lấy SV chưa có tài khoản
+        Cursor cursorSV = db.rawQuery("SELECT MaSV FROM SinhVien WHERE MaSV NOT IN (SELECT Username FROM NguoiDung)", null);
+        while (cursorSV.moveToNext()) {
+            dsUser.add(cursorSV.getString(0));
         }
-        cursor.close();
+        cursorSV.close();
 
-        if (taiKhoanAdapter == null) {
-            taiKhoanAdapter = new ArrayAdapter<>(this,
-                    android.R.layout.simple_list_item_1, listTaiKhoan);
-            lvTaiKhoan.setAdapter(taiKhoanAdapter);
-        } else {
-            taiKhoanAdapter.notifyDataSetChanged();
+        // Lấy GV chưa có tài khoản
+        Cursor cursorGV = db.rawQuery("SELECT MaGV FROM GiangVien WHERE MaGV NOT IN (SELECT Username FROM NguoiDung)", null);
+        while (cursorGV.moveToNext()) {
+            dsUser.add(cursorGV.getString(0));
+        }
+        cursorGV.close();
+
+        // Thêm admin (nếu muốn hiển thị để chỉnh sửa)
+        if (!dsUser.contains("admin")) {
+            dsUser.add("admin");
         }
 
-        if (listTaiKhoanGoc == null) listTaiKhoanGoc = new ArrayList<>();
-        listTaiKhoanGoc.clear();
-        listTaiKhoanGoc.addAll(listTaiKhoan);
-    }
-
-    // ================== LỌC DANH SÁCH ==================
-    private void filterTaiKhoan(String keyword) {
-        listTaiKhoan.clear();
-        if (keyword.isEmpty()) listTaiKhoan.addAll(listTaiKhoanGoc);
-        else {
-            for (String tk : listTaiKhoanGoc) {
-                if (tk.toLowerCase().contains(keyword.toLowerCase())) {
-                    listTaiKhoan.add(tk);
-                }
-            }
-        }
-        taiKhoanAdapter.notifyDataSetChanged();
-    }
-
-    private String getSelectedRole() {
-        int id = radioGroupRole.getCheckedRadioButtonId();
-        if (id == R.id.rdoSinhVien) return "SinhVien";
-        else return "GiangVien";
+        adapterUser = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dsUser);
+        adapterUser.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnUsername.setAdapter(adapterUser);
     }
 }
