@@ -18,18 +18,22 @@ public class View_only extends AppCompatActivity {
     private EditText editMaSV;
     private Button buttonXemDiem, buttonQuayLai;
     private TextView textHoTen, textMonHoc, textDiemQT, textDiemGK, textDiemCK, textDiemTK, textTrangThai;
-    private Spinner spinnerHocKy_Xem, spinnerMonHoc_Xem;
+    private Spinner spinnerMonHoc_Xem;
     private SQLiteDatabase database;
     private CreateDatabase dbHelper;
+
+    private ArrayList<String> maLopMHList = new ArrayList<>();
+    private ArrayList<String> tenMonHocList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_scores);
+        setContentView(com.example.project1.R.layout.view_scores);
 
-        dbHelper = new  CreateDatabase(this);
+        dbHelper = new CreateDatabase(this);
         database = dbHelper.open();
 
+        // Ánh xạ view
         editMaSV = findViewById(R.id.editMaSV_Xem);
         buttonXemDiem = findViewById(R.id.buttonXemDiem);
         buttonQuayLai = findViewById(R.id.buttonQuayLai);
@@ -42,31 +46,10 @@ public class View_only extends AppCompatActivity {
         textTrangThai = findViewById(R.id.textTrangThai_Xem);
         spinnerMonHoc_Xem = findViewById(R.id.spinnerMonHoc_Xem);
 
-        // 🟩 Load dữ liệu Spinner môn học từ bảng MonHoc
-        try {
-            Cursor cursor = database.rawQuery("SELECT TenMH FROM MonHoc", null);
-            ArrayList<String> monHocList = new ArrayList<>();
+        // 🟩 Load danh sách môn học từ LopMonHoc JOIN MonHoc
+        loadMonHocSpinner();
 
-            if (cursor.moveToFirst()) {
-                do {
-                    String tenMH = cursor.getString(cursor.getColumnIndexOrThrow("TenMH"));
-                    monHocList.add(tenMH);
-                } while (cursor.moveToNext());
-            }
-
-            cursor.close();
-
-            if (monHocList.isEmpty()) {
-                monHocList.add("⚠️ Chưa có môn học trong CSDL");
-            }
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, monHocList);
-            spinnerMonHoc_Xem.setAdapter(adapter);
-
-        } catch (Exception e) {
-            Toast.makeText(this, "Lỗi khi tải danh sách môn học!", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
+        // 🟦 Khi bấm nút “Xem điểm”
         buttonXemDiem.setOnClickListener(v -> {
             String maSV = editMaSV.getText().toString().trim();
 
@@ -75,14 +58,22 @@ public class View_only extends AppCompatActivity {
                 return;
             }
 
+            int pos = spinnerMonHoc_Xem.getSelectedItemPosition();
+            if (pos < 0 || pos >= maLopMHList.size()) {
+                Toast.makeText(this, "Vui lòng chọn môn học!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String maLopMH = maLopMHList.get(pos);
+
             Cursor cursor = database.rawQuery(
                     "SELECT sv.HoTen, mh.TenMH, d.DiemQT, d.DiemGK, d.DiemCK, d.DiemTK, d.TrangThai " +
                             "FROM SinhVien sv " +
                             "JOIN Diem d ON sv.MaSV = d.MaSV " +
                             "JOIN LopMonHoc lm ON d.MaLopMH = lm.MaLopMH " +
                             "JOIN MonHoc mh ON lm.MaMH = mh.MaMH " +
-                            "WHERE sv.MaSV = ?",
-                    new String[]{maSV});
+                            "WHERE sv.MaSV = ? AND d.MaLopMH = ?",
+                    new String[]{maSV, maLopMH});
 
             if (cursor.moveToFirst()) {
                 textHoTen.setText("Họ tên: " + cursor.getString(cursor.getColumnIndexOrThrow("HoTen")));
@@ -93,20 +84,70 @@ public class View_only extends AppCompatActivity {
                 textDiemTK.setText("Tổng kết: " + cursor.getDouble(cursor.getColumnIndexOrThrow("DiemTK")));
                 textTrangThai.setText("Trạng thái: " + cursor.getString(cursor.getColumnIndexOrThrow("TrangThai")));
             } else {
-                Toast.makeText(this, "Không tìm thấy mã sinh viên!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Không tìm thấy điểm cho sinh viên này ở môn học đã chọn!", Toast.LENGTH_SHORT).show();
+                textHoTen.setText("");
+                textMonHoc.setText("");
+                textDiemQT.setText("");
+                textDiemGK.setText("");
+                textDiemCK.setText("");
+                textDiemTK.setText("");
+                textTrangThai.setText("");
             }
 
             cursor.close();
         });
 
-        buttonQuayLai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Quay lại màn hình chọn vai trò hoặc main
-                Intent intent = new Intent(View_only.this, MainActivity.class);
-                startActivity(intent);
-                finish(); // Kết thúc activity hiện tại
-            }
+        // 🟦 Quay lại
+        buttonQuayLai.setOnClickListener(v -> {
+            Intent intent = new Intent(View_only.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         });
+    }
+
+    private void loadMonHocSpinner() {
+        maLopMHList.clear();
+        tenMonHocList.clear();
+
+        Cursor cursor = null;
+        try {
+            // Lấy danh sách môn học từ LopMonHoc JOIN MonHoc
+            cursor = database.rawQuery(
+                    "SELECT LMH.MaLopMH, MH.TenMH " +
+                            "FROM LopMonHoc LMH JOIN MonHoc MH ON LMH.MaMH = MH.MaMH",
+                    null);
+
+            if (cursor.moveToFirst()) {
+                do {
+                    String maLopMH = cursor.getString(0);
+                    String tenMH = cursor.getString(1);
+                    maLopMHList.add(maLopMH);
+                    tenMonHocList.add(tenMH);
+                } while (cursor.moveToNext());
+            }
+
+            if (tenMonHocList.isEmpty()) {
+                tenMonHocList.add("⚠️ Chưa có môn học trong CSDL");
+            }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, tenMonHocList);
+            spinnerMonHoc_Xem.setAdapter(adapter);
+
+        } catch (Exception e) {
+            Toast.makeText(this, "Lỗi khi tải danh sách môn học!", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        } finally {
+            if (cursor != null && !cursor.isClosed()) cursor.close();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (database != null && database.isOpen()) {
+            database.close();
+        }
+    }
 }
-}
+
+

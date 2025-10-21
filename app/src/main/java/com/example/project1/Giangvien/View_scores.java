@@ -26,14 +26,14 @@ public class View_scores extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_scores);
+        setContentView(com.example.project1.R.layout.activity_view_scores);
 
         recyclerViewScores = findViewById(R.id.recyclerViewScores);
         tvTenSV = findViewById(R.id.tvTenSV);
         tvMaSV = findViewById(R.id.tvMaSV);
         tvLop = findViewById(R.id.tvLop);
 
-        dbHelper = new  CreateDatabase(this);
+        dbHelper = new CreateDatabase(this);
         database = dbHelper.open();
 
         // Nhận dữ liệu từ Intent
@@ -45,28 +45,35 @@ public class View_scores extends AppCompatActivity {
         tvMaSV.setText("Mã SV: " + maSV);
         tvLop.setText("Lớp: " + maLop);
 
-        // Lấy danh sách điểm của sinh viên đó
+        // Lấy danh sách điểm theo sinh viên, bao gồm môn học từ LopMonHoc
         listDiem = new ArrayList<>();
         try {
             Cursor c = database.rawQuery(
-                    "SELECT mh.TenMH, d.DiemQT, d.DiemGK, d.DiemCK, d.DiemTK, d.TrangThai " +
-                            "FROM Diem d JOIN LopMonHoc lm ON d.MaLopMH = lm.MaLopMH " +
+                    "SELECT mh.TenMH, d.DiemQT, d.DiemGK, d.DiemCK, d.DiemTK, d.TrangThai, lm.MaLopMH " +
+                            "FROM Diem d " +
+                            "JOIN LopMonHoc lm ON d.MaLopMH = lm.MaLopMH " +
                             "JOIN MonHoc mh ON lm.MaMH = mh.MaMH " +
-                            "WHERE d.MaSV = ?", new String[]{maSV});
+                            "WHERE d.MaSV = ?",
+                    new String[]{maSV});
 
-            while (c.moveToNext()) {
-                listDiem.add(new Scores(
-                        c.getString(0),
-                        c.getDouble(1),
-                        c.getDouble(2),
-                        c.getDouble(3),
-                        c.getDouble(4),
-                        c.getString(5)
-                ));
+            if (c.moveToFirst()) {
+                do {
+                    String tenMH = c.getString(c.getColumnIndexOrThrow("TenMH"));
+                    double diemQT = c.getDouble(c.getColumnIndexOrThrow("DiemQT"));
+                    double diemGK = c.getDouble(c.getColumnIndexOrThrow("DiemGK"));
+                    double diemCK = c.getDouble(c.getColumnIndexOrThrow("DiemCK"));
+                    double diemTK = c.getDouble(c.getColumnIndexOrThrow("DiemTK"));
+                    String trangThai = c.getString(c.getColumnIndexOrThrow("TrangThai"));
+
+                    listDiem.add(new Scores(tenMH, diemQT, diemGK, diemCK, diemTK, trangThai));
+                } while (c.moveToNext());
+            } else {
+                Toast.makeText(this, "⚠️ Sinh viên chưa có điểm trong cơ sở dữ liệu!", Toast.LENGTH_SHORT).show();
             }
+
             c.close();
         } catch (Exception e) {
-            Toast.makeText(this, "Lỗi khi đọc dữ liệu điểm!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "❌ Lỗi khi đọc dữ liệu điểm!", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
 
@@ -75,4 +82,7 @@ public class View_scores extends AppCompatActivity {
         recyclerViewScores.setAdapter(adapter);
     }
 }
+
+
+
 
