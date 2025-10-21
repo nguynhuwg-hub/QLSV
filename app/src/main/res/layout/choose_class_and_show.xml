@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
+    android:background="#E3F2FD"
+    android:padding="16dp">
+
+    <!-- Phần chọn lớp -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chọn lớp"
+            android:textColor="#0D47A1"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp" />
+
+        <Spinner
+            android:id="@+id/spinnerLop"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#1976D2"
+            android:popupBackground="#E3F2FD" />
+    </LinearLayout>
+
+    <!-- Danh sách điểm -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:background="#F5F9FF"
+        android:elevation="3dp"
+        android:padding="8dp"
+        android:orientation="vertical"
+        android:layout_marginTop="4dp"
+        android:clipToPadding="false">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Danh sách điểm sinh viên"
+            android:textColor="#1565C0"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginBottom="8dp"/>
+
+        <ListView
+            android:id="@+id/listViewDiem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#0D47A1"
+            android:dividerHeight="1dp"
+            android:background="#FFFFFF" />
+    </LinearLayout>
+</LinearLayout>

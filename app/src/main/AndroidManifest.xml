@@ -31,7 +31,11 @@
 <activity android:name=".Admin.QuanlySinhvienActivity" android:exported="false"></activity>
 
       <activity android:name=".Admin.QuanlyGiangvienActivity" android:exported="false"></activity>
-        
+        <activity android:name=".Giangvien.MainActivity"/>
+        <activity android:name=".Giangvien.Enter_scores" />
+        <activity android:name=".Giangvien.View_only" />
+        <activity android:name=".Giangvien.ActivityDanhSachSinhVien"/>
+        <activity android:name=".Giangvien.View_scores" />
 
     </application>
 

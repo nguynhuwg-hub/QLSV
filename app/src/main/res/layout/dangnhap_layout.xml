@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-   android:background="@drawable/background1"
+   android:background="@drawable/background3"
     >
     <LinearLayout
         android:orientation="vertical"
@@ -21,7 +21,7 @@
             android:textSize="30dp"
             android:textStyle="bold"
             android:layout_gravity="center"
-            android:textColor="#4E4545">
+            android:textColor="#9B2C2C">
         </TextView>
     </LinearLayout>
     <LinearLayout
@@ -40,7 +40,7 @@
          android:hint="@string/tendangnhap"
          android:drawableLeft="@drawable/user2"
          android:drawablePadding="10dp"
-         android:background="#6D6767"
+         android:background="#FBE5E5"
          android:padding="20dp"
          android:nextFocusDown="@id/edtMK">
      </EditText>
@@ -51,7 +51,7 @@
             android:hint="@string/password"
             android:drawableLeft="@drawable/password"
             android:drawablePadding="10dp"
-            android:background="#6D6767"
+            android:background="#FFE5E5"
             android:padding="20dp"
             android:layout_marginTop="20dp"
             android:inputType="numberPassword"
@@ -65,7 +65,7 @@
             android:text="Đăng nhập"
             android:layout_marginTop="20dp"
             android:padding="15dp"
-            android:backgroundTint="@color/black">
+            android:backgroundTint="#CA6161">
 
         </Button>
 

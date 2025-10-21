@@ -3,21 +3,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/winter"
+    >
 
     <EditText
+        android:minHeight="48dp"
         android:id="@+id/edtMaSV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Mã sinh viên" />
 
     <EditText
+        android:minHeight="48dp"
         android:id="@+id/edtHoTenSV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Họ tên sinh viên" />
 
     <EditText
+        android:minHeight="48dp"
         android:id="@+id/edtNgaySinh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,9 +52,12 @@
         android:id="@+id/edtDiaChi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Địa chỉ" />
+        android:hint="Địa chỉ"
+        android:minHeight="48dp"
+        />
 
     <Spinner
+        android:minHeight="48dp"
         android:id="@+id/spinnerLop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

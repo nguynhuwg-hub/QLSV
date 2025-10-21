@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,7 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.project1.Giangvien.GiangvienActivity;
+import com.example.project1.Giangvien.MainActivity;
 import com.example.project1.R;
 import com.example.project1.Sinhvien.SinhvienActivity;
 import com.example.project1.database.CreateDatabase;
@@ -81,7 +80,7 @@ public class DangnhapActivity extends AppCompatActivity {
                     startActivity(intent);
 
                 } else if ("GiangVien".equalsIgnoreCase(role)) {
-                    startActivity(new Intent(this, GiangvienActivity.class));
+                    startActivity(new Intent(this, MainActivity.class));
                 }
 
                 cursor.close();

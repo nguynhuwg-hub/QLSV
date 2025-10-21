@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#E3F2FD"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView android:id="@+id/tvTenSV"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#0D47A1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView android:id="@+id/tvMaSV"
+        android:layout_width="match_parent"
+        android:textColor="#1565C0"
+        android:layout_height="wrap_content" />
+
+    <TextView android:id="@+id/tvLop"
+        android:layout_width="match_parent"
+        android:textColor="#1976D2"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewScores"
+        android:layout_width="match_parent"
+        android:background="#FFFFFF"
+        android:layout_height="match_parent"/>
+</LinearLayout>

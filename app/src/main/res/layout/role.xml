@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#E8F5E9"
+    android:padding="24dp">
+
+    <!-- Tiêu đề -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🌸 Chọn vai trò đăng nhập 🌸"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#2E7D32"
+        android:layout_marginBottom="40dp" />
+
+    <!-- Nút Admin -->
+    <Button
+        android:id="@+id/btnAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="👑 Quản trị viên (Admin)"
+        android:backgroundTint="#81C784"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:layout_marginBottom="20dp"
+        android:padding="12dp"
+        android:elevation="4dp" />
+
+    <!-- Nút Sinh viên -->
+    <Button
+        android:id="@+id/btnSinhVien"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🎓 Sinh viên"
+        android:backgroundTint="#AED581"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:elevation="4dp" />
+
+</LinearLayout>
+

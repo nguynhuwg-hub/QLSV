@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutFirst"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#E3F2FD"
+    android:padding="16dp">
+
+    <!-- Spinner chọn môn học -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Môn học:"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#0D47A1"
+            android:layout_marginEnd="16dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerMonHoc"
+            android:layout_width="200dp"
+            android:layout_height="48dp"
+            android:backgroundTint="#1976D2"
+            android:popupBackground="#E3F2FD" />
+    </LinearLayout>
+
+    <!-- Button hiển thị danh sách -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="12dp">
+
+        <Button
+            android:id="@+id/buttonHienThiDanhSach"
+            android:layout_width="160dp"
+            android:layout_height="50dp"
+            android:text="Hiển thị"
+            android:textStyle="bold"
+            android:backgroundTint="#1976D2"
+            android:textColor="@android:color/white"
+            android:elevation="4dp"
+            android:layout_marginTop="4dp"/>
+    </LinearLayout>
+
+    <!-- Layout nhập điểm -->
+    <LinearLayout
+        android:id="@+id/layoutNhapDiem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:background="#F5F9FF"
+        android:padding="16dp"
+        android:elevation="3dp"
+        android:clipToPadding="false">
+
+        <!-- Thông tin sinh viên -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="8dp">
+
+            <EditText
+                android:id="@+id/editMaSinhVien"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:hint="Mã sinh viên"
+                android:gravity="center"
+                android:background="#E3F2FD"
+                android:padding="10dp"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:id="@+id/textHoTen"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:hint="Họ tên"
+                android:textSize="18sp"
+                android:textColor="#0D47A1"
+                android:gravity="center"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/textLop"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:hint="Lớp"
+                android:textSize="18sp"
+                android:textColor="#0D47A1"
+                android:gravity="center"
+                android:layout_marginBottom="16dp"/>
+        </LinearLayout>
+
+        <!-- Điểm QT, GK, CK -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp">
+
+            <EditText
+                android:id="@+id/editDiemQT"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:hint="Điểm QT"
+                android:gravity="center"
+                android:background="#E3F2FD"
+                android:padding="8dp"
+                android:layout_marginEnd="16dp"/>
+
+            <EditText
+                android:id="@+id/editDiemGK"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:hint="Điểm GK"
+                android:gravity="center"
+                android:background="#E3F2FD"
+                android:padding="8dp"
+                android:layout_marginEnd="16dp"/>
+
+            <EditText
+                android:id="@+id/editDiemCK"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:hint="Điểm CK"
+                android:gravity="center"
+                android:background="#E3F2FD"
+                android:padding="8dp"/>
+        </LinearLayout>
+
+        <!-- Điểm tổng kết và trạng thái -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="24dp">
+
+            <TextView
+                android:id="@+id/textDiemTK"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Điểm TK:"
+                android:textStyle="bold"
+                android:textColor="#1565C0"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/textTrangThai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="________"
+                android:textColor="#0D47A1"
+                android:textSize="18sp"
+                android:layout_marginStart="12dp"/>
+        </LinearLayout>
+
+        <!-- Các nút chức năng -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginTop="24dp">
+
+            <!-- Lưu & Quay lại -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/buttonLuu"
+                    android:layout_width="120dp"
+                    android:layout_height="50dp"
+                    android:text="Lưu"
+                    android:textStyle="bold"
+                    android:backgroundTint="#1976D2"
+                    android:textColor="@android:color/white"
+                    android:layout_marginEnd="12dp"/>
+
+                <Button
+                    android:id="@+id/buttonQuayLai"
+                    android:layout_width="120dp"
+                    android:layout_height="50dp"
+                    android:text="Quay lại"
+                    android:textStyle="bold"
+                    android:backgroundTint="#64B5F6"
+                    android:textColor="@android:color/white"/>
+            </LinearLayout>
+
+            <!-- Chỉnh sửa -->
+            <Button
+                android:id="@+id/buttonChinhSua"
+                android:layout_width="160dp"
+                android:layout_height="50dp"
+                android:text="Chỉnh sửa"
+                android:textStyle="bold"
+                android:backgroundTint="#42A5F5"
+                android:textColor="@android:color/white"
+                android:layout_marginTop="16dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

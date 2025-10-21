@@ -1,0 +1,91 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:elevation="4dp"
+    android:background="#FFF8E1">
+
+    <!-- Họ tên sinh viên -->
+    <TextView
+        android:id="@+id/tvMaSV"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="#6D4C41"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvHoTen"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#BF360C"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- Tên môn học -->
+    <TextView
+        android:id="@+id/tvMonHoc"
+        android:textColor="#E65100"
+        android:textStyle="italic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp" />
+
+    <!-- Các điểm -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/tvQT"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#5D4037" />
+
+        <TextView
+            android:id="@+id/tvGK"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#5D4037" />
+
+        <TextView
+            android:id="@+id/tvCK"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#5D4037" />
+
+        <TextView
+            android:id="@+id/tvTK"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#4E342E" />
+
+        <Button
+            android:id="@+id/buttonNhapDiem"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FF7043"
+            android:textColor="@android:color/white"
+            android:text="Nhập điểm" />
+
+        <Button
+            android:id="@+id/buttonXemDiem"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#F57C00"
+            android:textColor="@android:color/white"
+            android:text="Xem điểm" />
+    </LinearLayout>
+</LinearLayout>
+
+
