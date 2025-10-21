@@ -56,7 +56,7 @@ public class SinhvienActivity extends AppCompatActivity {
          * LopMonHoc.MaMH → MonHoc.MaMH
          */
 
-        String query = "SELECT MonHoc.TenMH, Diem.DiemTP, Diem.DiemThi, Diem.DiemTongKet " +
+        String query = "SELECT MonHoc.TenMH, Diem.DiemQT, Diem.DiemGK, Diem.DiemCK ,Diem.DiemTK , Diem.TrangThai  " +
                 "FROM Diem " +
                 "INNER JOIN LopMonHoc ON Diem.MaLopMH = LopMonHoc.MaLopMH " +
                 "INNER JOIN MonHoc ON LopMonHoc.MaMH = MonHoc.MaMH " +
@@ -67,14 +67,18 @@ public class SinhvienActivity extends AppCompatActivity {
         if (cursor.moveToFirst()) {
             do {
                 String tenMH = cursor.getString(0);
-                float diemTP = cursor.getFloat(1);
-                float diemThi = cursor.getFloat(2);
-                float diemTongKet = cursor.getFloat(3);
+                float DiemQT = cursor.getFloat(1);
+                float DiemGK = cursor.getFloat(2);
+                float DiemCK = cursor.getFloat(3);
+                float DiemTK = cursor.getFloat(4);
+                float TrangThai = cursor.getFloat(5);
 
                 danhSachDiem.add(
-                        tenMH + "\n - Điểm thành phần: " + diemTP +
-                                "\n - Điểm thi: " + diemThi +
-                                "\n - Tổng kết: " + diemTongKet
+                        tenMH + "\n - Điểm thành phần: " + DiemQT  +
+                                "\n - Điểm thi: " +DiemGK +
+                                "\n - Tổng kết: " + DiemCK +
+                                "\n - Tổng kết: " + DiemTK +
+                                "\n - Tổng kết: " + TrangThai
                 );
             } while (cursor.moveToNext());
         } else {

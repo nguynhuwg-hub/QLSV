@@ -26,6 +26,7 @@
 
         </activity>
 <activity android:name=".Admin.QuanlySinhvienActivity" android:exported="false"></activity>
+        <activity android:name=".Admin.Quanlytaikhoan" android:exported="false"> </activity>
 
       <activity android:name=".Admin.QuanlyGiangvienActivity" android:exported="false"></activity>
         <activity android:name=".Giangvien.MainActivity"/>
