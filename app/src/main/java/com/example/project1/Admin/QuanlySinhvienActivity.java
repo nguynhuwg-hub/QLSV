@@ -126,12 +126,40 @@ public class QuanlySinhvienActivity extends AppCompatActivity {
             values.put("MaLop", selectedLop);
 
             long kq = db.insert("SinhVien", null, values);
-            if(kq == -1){
-                Toast.makeText(this, "Thêm thất bại!", Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(this, "Thêm thành công!", Toast.LENGTH_SHORT).show();
+            if (kq == -1) {
+                Toast.makeText(this, "Thêm sinh viên thất bại!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Thêm sinh viên thành công!", Toast.LENGTH_SHORT).show();
                 loadSinhVien();
+
+                // ================================
+                // 🔹 Tự động tạo tài khoản đăng nhập
+                // ================================
+                String username = ma; // Tên đăng nhập = Mã sinh viên
+                String password = "1"; // Mật khẩu mặc định
+                String role = "SinhVien";
+
+                // Kiểm tra xem tài khoản đã tồn tại chưa
+                Cursor check = db.rawQuery("SELECT * FROM NguoiDung WHERE Username=?", new String[]{username});
+                if (check.getCount() == 0) {
+                    ContentValues userValues = new ContentValues();
+                    userValues.put("Username", username);
+                    userValues.put("Password", password);
+                    userValues.put("Role", role);
+                    userValues.put("MaSV", ma);
+
+                    long kqUser = db.insert("NguoiDung", null, userValues);
+                    if (kqUser != -1) {
+                        Toast.makeText(this, "✅ Đã tạo tài khoản cho sinh viên: " + username, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "⚠️ Lỗi khi tạo tài khoản sinh viên!", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(this, "⚠️ Tài khoản đã tồn tại!", Toast.LENGTH_SHORT).show();
+                }
+                check.close();
             }
+
 
         });
 

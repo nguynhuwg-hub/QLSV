@@ -18,10 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER"> </category>
             </intent-filter>
         </activity>
-        <activity android:name=".Giangvien.GiangvienActivity"
-            android:exported="false"
-            >
-        </activity>
+
         <activity android:name=".Sinhvien.SinhvienActivity" android:exported="false">
 
         </activity>
