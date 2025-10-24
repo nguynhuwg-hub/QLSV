@@ -49,11 +49,13 @@ public class AdminActivity extends AppCompatActivity {
 
         cardLop.setOnClickListener(v ->
                 Toast.makeText(this, "Quản lý lớp", Toast.LENGTH_SHORT).show()
+
         );
 
-        cardMonHoc.setOnClickListener(v ->
-                Toast.makeText(this, "Quản lý môn học", Toast.LENGTH_SHORT).show()
-        );
+        cardMonHoc.setOnClickListener(v ->{
+                Toast.makeText(this, "Quản lý môn học", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(AdminActivity.this, MonHocActivity.class));
+    } );
 
         cardTaiKhoan.setOnClickListener(v -> {
             Toast.makeText(this, "Quản lý tài khoản", Toast.LENGTH_SHORT).show();

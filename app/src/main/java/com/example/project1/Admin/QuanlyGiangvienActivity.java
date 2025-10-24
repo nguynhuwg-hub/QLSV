@@ -82,7 +82,17 @@ public class QuanlyGiangvienActivity extends AppCompatActivity {
                 values.put("HoTen", tenGV);
                 values.put("BoMon", boMon);
                 db.insert("GiangVien", null, values);
-                Toast.makeText(this, "Thêm thành công!", Toast.LENGTH_SHORT).show();
+
+                ContentValues userValues = new ContentValues();
+                String username = maGV; // Tên đăng nhập = mã giảng viên
+                String password = "123456"; // Mật khẩu mặc định
+                userValues.put("Username", username);
+                userValues.put("Password", password);
+                userValues.put("Role", "GiangVien");
+                userValues.put("MaGV", maGV);
+                db.insert("NguoiDung", null, userValues);
+
+                Toast.makeText(this, "Thêm và tài khoản thành công!", Toast.LENGTH_SHORT).show();
                 loadGiangVien();
             }
             c.close();

@@ -34,6 +34,9 @@
         <activity android:name=".Giangvien.View_only" />
         <activity android:name=".Giangvien.ActivityDanhSachSinhVien"/>
         <activity android:name=".Giangvien.View_scores" />
+        <activity android:name=".Admin.MainActivity"/>
+        <activity android:name=".Admin.MonHocActivity"/>
+
 
     </application>
 

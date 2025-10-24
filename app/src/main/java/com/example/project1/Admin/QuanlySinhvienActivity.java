@@ -34,13 +34,13 @@ public class QuanlySinhvienActivity extends AppCompatActivity {
     RadioGroup rgGioiTinh;
     RadioButton rbNam, rbNu;
     Spinner spinnerLop;
-    Button btnThemSV, btnSuaSV, btnXoaSV,btnThoatSV;
+    Button btnThemSV, btnSuaSV, btnXoaSV, btnThoatSV;
     ListView lvSinhVien;
 
     ArrayList<String> dsSinhVien;
     ArrayAdapter<String> adapterSV;
 
-    ArrayList<String> dsLop;  // lưu mã lớp
+    ArrayList<String> dsLop;
     ArrayAdapter<String> adapterLop;
 
     CreateDatabase createDatabase;
@@ -73,10 +73,9 @@ public class QuanlySinhvienActivity extends AppCompatActivity {
         createDatabase = new CreateDatabase(this);
         db = createDatabase.getWritableDatabase();
 
-        // Load danh sách lớp vào Spinner
+        // Load danh sách lớp
         dsLop = new ArrayList<>();
         loadLop();
-
         adapterLop = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dsLop);
         adapterLop.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerLop.setAdapter(adapterLop);
@@ -86,7 +85,6 @@ public class QuanlySinhvienActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, android.view.View view, int position, long id) {
                 selectedLop = dsLop.get(position);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
@@ -95,75 +93,59 @@ public class QuanlySinhvienActivity extends AppCompatActivity {
         dsSinhVien = new ArrayList<>();
         adapterSV = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dsSinhVien);
         lvSinhVien.setAdapter(adapterSV);
-
         loadSinhVien();
 
-        // Thêm sinh viên
+        // === THÊM SINH VIÊN ===
         btnThemSV.setOnClickListener(v -> {
-            String ma = edtMaSV.getText().toString().trim();
+            String maSV = edtMaSV.getText().toString().trim();
             String ten = edtHoTenSV.getText().toString().trim();
             String ngaySinh = edtNgaySinh.getText().toString().trim();
             String diaChi = edtDiaChi.getText().toString().trim();
             String gt = rbNam.isChecked() ? "Nam" : "Nữ";
 
-            if(ma.isEmpty() || ten.isEmpty() || selectedLop.isEmpty()){
-                Toast.makeText(this, "Nhập đủ thông tin!", Toast.LENGTH_SHORT).show();
+            if (maSV.isEmpty() || ten.isEmpty() || selectedLop.isEmpty()) {
+                Toast.makeText(this, "Vui lòng nhập đủ thông tin!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            Cursor cursor = db.rawQuery("SELECT * FROM SinhVien WHERE MaSV = ?", new String[]{ma});
-            if (cursor.getCount() > 0) {
+            Cursor c = db.rawQuery("SELECT * FROM SinhVien WHERE MaSV=?", new String[]{maSV});
+            if (c.moveToFirst()) {
                 Toast.makeText(this, "Mã sinh viên đã tồn tại!", Toast.LENGTH_SHORT).show();
-                cursor.close();
-                return; // Dừng lại, không thêm nữa
+                c.close();
+                return;
             }
+
+            // Thêm vào bảng SinhVien
             ContentValues values = new ContentValues();
-            values.put("MaSV", ma);
+            values.put("MaSV", maSV);
             values.put("HoTen", ten);
             values.put("NgaySinh", ngaySinh);
             values.put("GioiTinh", gt);
             values.put("DiaChi", diaChi);
             values.put("MaLop", selectedLop);
+            db.insert("SinhVien", null, values);
+            c.close();
 
-            long kq = db.insert("SinhVien", null, values);
-            if (kq == -1) {
-                Toast.makeText(this, "Thêm sinh viên thất bại!", Toast.LENGTH_SHORT).show();
+            // === Tạo tài khoản tự động ===
+            Cursor checkUser = db.rawQuery("SELECT * FROM NguoiDung WHERE Username=?", new String[]{maSV});
+            if (!checkUser.moveToFirst()) {
+                ContentValues userValues = new ContentValues();
+                userValues.put("Username", maSV);
+                userValues.put("Password", "123456"); // Mật khẩu mặc định
+                userValues.put("Role", "SinhVien");
+                userValues.put("MaSV", maSV);
+                db.insert("NguoiDung", null, userValues);
+                Toast.makeText(this, "✅ Đã tạo tài khoản cho sinh viên!", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Thêm sinh viên thành công!", Toast.LENGTH_SHORT).show();
-                loadSinhVien();
-
-                // ================================
-                // 🔹 Tự động tạo tài khoản đăng nhập
-                // ================================
-                String username = ma; // Tên đăng nhập = Mã sinh viên
-                String password = "1"; // Mật khẩu mặc định
-                String role = "SinhVien";
-
-                // Kiểm tra xem tài khoản đã tồn tại chưa
-                Cursor check = db.rawQuery("SELECT * FROM NguoiDung WHERE Username=?", new String[]{username});
-                if (check.getCount() == 0) {
-                    ContentValues userValues = new ContentValues();
-                    userValues.put("Username", username);
-                    userValues.put("Password", password);
-                    userValues.put("Role", role);
-                    userValues.put("MaSV", ma);
-
-                    long kqUser = db.insert("NguoiDung", null, userValues);
-                    if (kqUser != -1) {
-                        Toast.makeText(this, "✅ Đã tạo tài khoản cho sinh viên: " + username, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(this, "⚠️ Lỗi khi tạo tài khoản sinh viên!", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(this, "⚠️ Tài khoản đã tồn tại!", Toast.LENGTH_SHORT).show();
-                }
-                check.close();
+                Toast.makeText(this, "⚠️ Tài khoản đã tồn tại!", Toast.LENGTH_SHORT).show();
             }
+            checkUser.close();
 
-
+            Toast.makeText(this, "Thêm sinh viên thành công!", Toast.LENGTH_SHORT).show();
+            loadSinhVien();
         });
 
-        // Sửa
+        // === SỬA ===
         btnSuaSV.setOnClickListener(v -> {
             String ma = edtMaSV.getText().toString().trim();
             String ten = edtHoTenSV.getText().toString().trim();
@@ -178,51 +160,53 @@ public class QuanlySinhvienActivity extends AppCompatActivity {
             values.put("DiaChi", diaChi);
             values.put("MaLop", selectedLop);
 
-            int kq = db.update("SinhVien", values, "MaSV=?", new String[]{ma});
-            if(kq > 0){
-                Toast.makeText(this, "Sửa thành công!", Toast.LENGTH_SHORT).show();
+            int rows = db.update("SinhVien", values, "MaSV=?", new String[]{ma});
+            if (rows > 0) {
+                Toast.makeText(this, "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
                 loadSinhVien();
-            }else{
-                Toast.makeText(this, "Không tìm thấy SV!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Không tìm thấy sinh viên!", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Xóa
+        // === XÓA ===
         btnXoaSV.setOnClickListener(v -> {
             String ma = edtMaSV.getText().toString().trim();
-            int kq = db.delete("SinhVien", "MaSV=?", new String[]{ma});
-            if(kq > 0){
-                Toast.makeText(this, "Xóa thành công!", Toast.LENGTH_SHORT).show();
-                loadSinhVien();
-            }else{
-                Toast.makeText(this, "Không tìm thấy SV!", Toast.LENGTH_SHORT).show();
-            }
+            db.delete("SinhVien", "MaSV=?", new String[]{ma});
+            db.delete("NguoiDung", "MaSV=?", new String[]{ma});
+            Toast.makeText(this, "Đã xóa sinh viên và tài khoản liên quan!", Toast.LENGTH_SHORT).show();
+            loadSinhVien();
         });
 
-        // Click vào list hiển thị lên form
+        // === HIỂN THỊ DỮ LIỆU LÊN FORM ===
         lvSinhVien.setOnItemClickListener((parent, view, position, id) -> {
             String[] parts = dsSinhVien.get(position).split(" - ");
             edtMaSV.setText(parts[0]);
             edtHoTenSV.setText(parts[1]);
             edtNgaySinh.setText(parts[2]);
             edtDiaChi.setText(parts[3]);
+            if (parts[4].equals("Nam")) rbNam.setChecked(true); else rbNu.setChecked(true);
 
-            if(parts[4].equals("Nam")) rbNam.setChecked(true); else rbNu.setChecked(true);
-
-            // Set spinner theo MaLop
-            for(int i=0; i<dsLop.size(); i++){
-                if(dsLop.get(i).equals(parts[5])){
+            for (int i = 0; i < dsLop.size(); i++) {
+                if (dsLop.get(i).equals(parts[5])) {
                     spinnerLop.setSelection(i);
                     break;
                 }
             }
+        });
+
+        btnThoatSV.setOnClickListener(v -> {
+            Intent intent = new Intent(QuanlySinhvienActivity.this, AdminActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         });
     }
 
     private void loadSinhVien() {
         dsSinhVien.clear();
         Cursor cursor = db.rawQuery("SELECT * FROM SinhVien", null);
-        while(cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             String ma = cursor.getString(0);
             String ten = cursor.getString(1);
             String ngaySinh = cursor.getString(2);
@@ -238,15 +222,9 @@ public class QuanlySinhvienActivity extends AppCompatActivity {
     private void loadLop() {
         dsLop.clear();
         Cursor cursor = db.rawQuery("SELECT MaLop FROM Lop", null);
-        while(cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             dsLop.add(cursor.getString(0));
         }
         cursor.close();
-        btnThoatSV.setOnClickListener(v -> {
-            Intent intent = new Intent(QuanlySinhvienActivity.this, AdminActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish(); // đóng AdminActivity
-        });
     }
 }

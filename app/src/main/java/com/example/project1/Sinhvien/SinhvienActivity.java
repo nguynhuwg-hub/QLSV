@@ -71,14 +71,14 @@ public class SinhvienActivity extends AppCompatActivity {
                 float DiemGK = cursor.getFloat(2);
                 float DiemCK = cursor.getFloat(3);
                 float DiemTK = cursor.getFloat(4);
-                float TrangThai = cursor.getFloat(5);
+                String TrangThai = cursor.getString(5);
 
                 danhSachDiem.add(
                         tenMH + "\n - Điểm thành phần: " + DiemQT  +
                                 "\n - Điểm thi: " +DiemGK +
                                 "\n - Tổng kết: " + DiemCK +
                                 "\n - Tổng kết: " + DiemTK +
-                                "\n - Tổng kết: " + TrangThai
+                                "\n - Trạng thái: " + TrangThai
                 );
             } while (cursor.moveToNext());
         } else {
