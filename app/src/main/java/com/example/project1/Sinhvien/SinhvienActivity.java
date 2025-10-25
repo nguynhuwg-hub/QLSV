@@ -5,12 +5,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.project1.Admin.DangnhapActivity;
+import com.example.project1.Giangvien.MainActivity;
 import com.example.project1.R;
 import com.example.project1.database.CreateDatabase;
 
@@ -23,12 +26,13 @@ public class SinhvienActivity extends AppCompatActivity {
     CreateDatabase dbHelper;
     SQLiteDatabase database;
     String maSV, tenSV;
+    Button btnThoatsv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sinhvien_layout);
-
+        btnThoatsv = findViewById(R.id.btnThoatsv);
         tvWelcome = findViewById(R.id.tvWelcome);
         tvThongTin = findViewById(R.id.tvThongTin);
         lvDiem = findViewById(R.id.lvDiem);
@@ -93,5 +97,12 @@ public class SinhvienActivity extends AppCompatActivity {
                 danhSachDiem
         );
         lvDiem.setAdapter(adapter);
+        //Thoat
+        btnThoatsv.setOnClickListener(v ->{
+            Intent intent = new Intent(SinhvienActivity.this, DangnhapActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        });
     }
 }

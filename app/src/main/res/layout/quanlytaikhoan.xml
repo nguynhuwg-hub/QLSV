@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="#F5F5F5"
+    android:background="@drawable/winter"
     android:layout_marginTop="40dp">
 
     <TextView
@@ -47,18 +47,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp">
 
-        <Button
-            android:id="@+id/btnAdd"
-            android:text="Thêm"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/btnUpdate"
             android:text="Sửa"
             android:layout_weight="1"
             android:layout_width="0dp"
+            android:layout_marginRight="5dp"
             android:layout_height="wrap_content"/>
 
         <Button
@@ -66,6 +61,7 @@
             android:text="Xóa"
             android:layout_weight="1"
             android:layout_width="0dp"
+            android:layout_marginLeft="5dp"
             android:layout_height="wrap_content"/>
     </LinearLayout>
 

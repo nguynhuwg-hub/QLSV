@@ -32,7 +32,6 @@ public class Quanlytaikhoan extends AppCompatActivity {
         spnUsername = findViewById(R.id.spnUsername);
         edtPassword = findViewById(R.id.edtPassword);
         edtRole = findViewById(R.id.edtRole);
-        btnAdd = findViewById(R.id.btnAdd);
         btnUpdate = findViewById(R.id.btnUpdate);
         btnDelete = findViewById(R.id.btnDelete);
         listTaiKhoan = findViewById(R.id.listTaiKhoan);
@@ -60,53 +59,7 @@ public class Quanlytaikhoan extends AppCompatActivity {
             c.close();
         });
 
-        // Nút thêm tài khoản
-        btnAdd.setOnClickListener(v -> {
-            String user = spnUsername.getSelectedItem() != null ? spnUsername.getSelectedItem().toString() : "";
-            String pass = edtPassword.getText().toString().trim();
 
-            if (user.isEmpty() || pass.isEmpty()) {
-                Toast.makeText(this, "Vui lòng chọn tài khoản và nhập mật khẩu!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            // Xác định role dựa trên mã
-            String role = "";
-            Cursor checkSV = db.rawQuery("SELECT MaSV FROM SinhVien WHERE MaSV=?", new String[]{user});
-            if (checkSV.moveToFirst()) {
-                role = "SinhVien";
-            }
-            checkSV.close();
-
-            Cursor checkGV = db.rawQuery("SELECT MaGV FROM GiangVien WHERE MaGV=?", new String[]{user});
-            if (checkGV.moveToFirst()) {
-                role = "GiangVien";
-            }
-            checkGV.close();
-
-            // Nếu không khớp SV hoặc GV thì mặc định là Admin
-            if (role.isEmpty()) {
-                role = "Admin";
-            }
-
-            // Kiểm tra trùng Username
-            Cursor check = db.rawQuery("SELECT Username FROM NguoiDung WHERE Username=?", new String[]{user});
-            if (check.moveToFirst()) {
-                Toast.makeText(this, "Tài khoản đã tồn tại!", Toast.LENGTH_SHORT).show();
-                check.close();
-                return;
-            }
-            check.close();
-
-            // Thêm vào NguoiDung
-            db.execSQL("INSERT INTO NguoiDung (Username, Password, Role) VALUES (?, ?, ?)",
-                    new Object[]{user, pass, role});
-
-            Toast.makeText(this, "Đã thêm tài khoản cho " + role, Toast.LENGTH_SHORT).show();
-
-            loadData();
-            loadUsernameList(); // Cập nhật spinner
-        });
 
         // Nút sửa
         btnUpdate.setOnClickListener(v -> {
