@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#E3F2FD"
+    tools:context=".Admin.MonHocActivity">
+
+    <!-- Tiêu đề -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="📘 Quản lý Môn học"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="#0D47A1"
+        android:padding="12dp"
+        android:layout_marginBottom="4dp"
+        android:elevation="2dp" />
+
+    <!-- Thanh chia nhẹ màu -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#BBDEFB"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Nút thêm môn học -->
+    <Button
+        android:id="@+id/btnThemMonHoc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="➕ Thêm môn học"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:backgroundTint="#1E88E5"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        android:layout_marginBottom="12dp"
+        android:elevation="5dp" />
+
+    <!-- Danh sách môn học -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvMonHoc"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="vertical"
+        android:background="#FFFFFF"
+        android:padding="8dp"
+        android:clipToPadding="false"
+        android:elevation="3dp"
+        tools:listitem="@layout/item_monhoc" />
+
+    <!-- Ghi chú nhỏ -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chạm vào biểu tượng ✏ để sửa hoặc 🗑 để xóa môn học"
+        android:textSize="13sp"
+        android:textColor="#555555"
+        android:gravity="center"
+        android:paddingTop="8dp"
+        android:paddingBottom="4dp" />
+
+</LinearLayout>

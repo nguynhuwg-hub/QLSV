@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:background="@drawable/bg_dialog_round"
+        android:layout_gravity="center"
+        android:elevation="8dp">
+
+        <!-- Tiêu đề -->
+        <TextView
+            android:id="@+id/tvTitleDialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thêm môn học"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#0D47A1"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Ô nhập Mã môn học -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_input_field"
+            android:padding="8dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_code"
+                android:layout_marginEnd="8dp"
+                app:tint="#E51E1E" />
+
+            <EditText
+                android:minHeight="48dp"
+                android:id="@+id/edtMaMH"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Nhập mã môn học (VD: MH01)"
+                android:background="@android:color/transparent"
+                android:inputType="text"
+                android:padding="8dp"/>
+        </LinearLayout>
+
+        <!-- Ô nhập Tên môn học -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_input_field"
+            android:padding="8dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_book"
+                android:layout_marginEnd="8dp"
+                app:tint="#1E3CE5" />
+
+            <EditText
+                android:minHeight="48dp"
+                android:id="@+id/edtTenMH"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Nhập tên môn học"
+                android:background="@android:color/transparent"
+                android:inputType="textPersonName"
+                android:padding="8dp"/>
+        </LinearLayout>
+
+        <!-- Ô nhập Số tín chỉ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_input_field"
+            android:padding="8dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="20dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_numbers"
+                android:layout_marginEnd="8dp"
+                app:tint="@color/black" />
+
+            <EditText
+                android:minHeight="48dp"
+                android:id="@+id/edtSoTinChi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Nhập số tín chỉ"
+                android:background="@android:color/transparent"
+                android:inputType="number"
+                android:padding="8dp"/>
+        </LinearLayout>
+
+        <!-- Nhóm nút -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/btnHuy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hủy"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#9C27B0"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/btnLuu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lưu"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#1E88E5" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
