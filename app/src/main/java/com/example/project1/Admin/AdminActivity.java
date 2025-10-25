@@ -47,10 +47,10 @@ public class AdminActivity extends AppCompatActivity {
             startActivity(new Intent(AdminActivity.this, QuanlyGiangvienActivity.class));
     }  );
 
-        cardLop.setOnClickListener(v ->
-                Toast.makeText(this, "Quản lý lớp", Toast.LENGTH_SHORT).show()
-
-        );
+        cardLop.setOnClickListener(v ->{
+                Toast.makeText(this, "Quản lý lớp", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(AdminActivity.this, QuanlylopActivity.class));
+    } );
 
         cardMonHoc.setOnClickListener(v ->{
                 Toast.makeText(this, "Quản lý môn học", Toast.LENGTH_SHORT).show();

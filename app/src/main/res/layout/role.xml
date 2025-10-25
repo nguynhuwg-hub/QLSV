@@ -23,7 +23,7 @@
         android:id="@+id/btnAdmin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="👑 Quản trị viên (Admin)"
+        android:text="👑 Nhập điểm "
         android:backgroundTint="#81C784"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
@@ -36,12 +36,24 @@
         android:id="@+id/btnSinhVien"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="🎓 Sinh viên"
+        android:text="🎓 Tìm kiếm "
         android:backgroundTint="#AED581"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:padding="12dp"
         android:elevation="4dp" />
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/btnThoatGV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thoát "
+        android:backgroundTint="#FB5B50"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:elevation="4dp" />
+
 
 </LinearLayout>
 

@@ -36,7 +36,7 @@
         <activity android:name=".Giangvien.View_scores" />
         <activity android:name=".Admin.MainActivity"/>
         <activity android:name=".Admin.MonHocActivity"/>
-
+<activity android:name=".Admin.QuanlylopActivity" android:exported="false" />
 
     </application>
 

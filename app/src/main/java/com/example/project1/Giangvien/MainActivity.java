@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Intent;
 
+import com.example.project1.Admin.AdminActivity;
+import com.example.project1.Admin.DangnhapActivity;
 import com.example.project1.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnAdmin = findViewById(R.id.btnAdmin);
         Button btnSinhVien = findViewById(R.id.btnSinhVien);
+        Button btnThoatGV = findViewById(R.id.btnThoatGV);
 
         // Admin → layout nhập và chỉnh sửa điểm
         btnAdmin.setOnClickListener(v -> {
@@ -35,6 +38,13 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("role", "SinhVien");
             startActivity(intent);
         });
+        btnThoatGV.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, DangnhapActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish(); // đóng AdminActivity
+        });
+
     }
 }
 

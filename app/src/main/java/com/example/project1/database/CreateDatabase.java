@@ -69,7 +69,7 @@ public static String TB_Sinhvien_Diachi ="DiaChi";
 
 
     public CreateDatabase(@Nullable Context context) {
-        super(context,"QLSV", null,10);
+        super(context,"QLSV", null,11);
     }
 
     @Override
@@ -77,7 +77,15 @@ public static String TB_Sinhvien_Diachi ="DiaChi";
         db.execSQL("CREATE TABLE Nganh (" +
                 "MaNganh TEXT PRIMARY KEY," +
                 "TenNganh TEXT NOT NULL)");
-
+        db.execSQL("INSERT INTO Nganh VALUES ('KT', 'Kế toán')");
+        db.execSQL("INSERT INTO Nganh VALUES ('QTKD', 'Quản trị kinh doanh')");
+        db.execSQL("INSERT INTO Nganh VALUES ('DL', 'Du lịch')");
+        db.execSQL("INSERT INTO Nganh VALUES ('NN', 'Ngôn ngữ Anh')");
+        db.execSQL("INSERT INTO Nganh VALUES ('XD', 'Xây dựng')");
+        db.execSQL("INSERT INTO Nganh VALUES ('DT', 'Điện tử viễn thông')");
+        db.execSQL("INSERT INTO Nganh VALUES ('CK', 'Cơ khí')");
+        db.execSQL("INSERT INTO Nganh VALUES ('KTMT', 'Kỹ thuật máy tính')");
+        db.execSQL("INSERT INTO Nganh VALUES ('TKDH', 'Thiết kế đồ họa')");
        
         db.execSQL("CREATE TABLE Lop (" +
                 "MaLop TEXT PRIMARY KEY," +
