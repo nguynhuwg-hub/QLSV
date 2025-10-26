@@ -49,6 +49,7 @@
 
 
         <Button
+            android:backgroundTint="#3DB4E7"
             android:id="@+id/btnUpdate"
             android:text="Sửa"
             android:layout_weight="1"
@@ -57,6 +58,7 @@
             android:layout_height="wrap_content"/>
 
         <Button
+            android:backgroundTint="#3DB4E7"
             android:id="@+id/btnDelete"
             android:text="Xóa"
             android:layout_weight="1"

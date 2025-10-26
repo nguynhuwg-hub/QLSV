@@ -63,34 +63,32 @@
         android:gravity="center">
 
         <Button
+            android:layout_weight="2"
+            android:backgroundTint="#38B6EF"
             android:id="@+id/btnThemSV"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Thêm" />
 
         <Button
+            android:layout_weight="2"
+            android:backgroundTint="#38B6EF"
             android:id="@+id/btnSuaSV"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sửa"
             android:layout_marginLeft="10dp"/>
 
         <Button
+            android:layout_weight="2"
+            android:backgroundTint="#38B6EF"
             android:id="@+id/btnXoaSV"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Xóa"
             android:layout_marginLeft="10dp"/>
 
-        <Button
-            android:id="@+id/btnThoatSV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Thoát"
-          android:backgroundTint="#D90707"
-            android:textStyle="bold"
-            android:layout_marginLeft="10dp"
-            />
+
     </LinearLayout>
 
     <ListView

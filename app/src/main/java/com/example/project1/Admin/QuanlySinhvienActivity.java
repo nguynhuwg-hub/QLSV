@@ -65,7 +65,7 @@ public class QuanlySinhvienActivity extends AppCompatActivity {
         spinnerLop = findViewById(R.id.spinnerLop);
         btnThemSV = findViewById(R.id.btnThemSV);
         btnSuaSV = findViewById(R.id.btnSuaSV);
-        btnThoatSV = findViewById(R.id.btnThoatSV);
+
         btnXoaSV = findViewById(R.id.btnXoaSV);
         lvSinhVien = findViewById(R.id.lvSinhVien);
 

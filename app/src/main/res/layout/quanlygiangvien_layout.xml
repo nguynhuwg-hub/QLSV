@@ -27,12 +27,15 @@
         android:layout_height="wrap_content"/>
 
     <LinearLayout
+
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center">
 
         <Button
+            android:layout_marginRight="10dp"
+            android:backgroundTint="#24AEF4"
             android:id="@+id/btnThemGV"
             android:text="Thêm"
             android:layout_width="0dp"
@@ -40,6 +43,8 @@
             android:layout_height="wrap_content"/>
 
         <Button
+            android:layout_marginRight="10dp"
+            android:backgroundTint="#24AEF4"
             android:id="@+id/btnSuaGV"
             android:text="Sửa"
             android:layout_width="0dp"
@@ -47,6 +52,7 @@
             android:layout_height="wrap_content"/>
 
         <Button
+            android:backgroundTint="#24AEF4"
             android:id="@+id/btnXoaGV"
             android:text="Xóa"
             android:layout_width="0dp"

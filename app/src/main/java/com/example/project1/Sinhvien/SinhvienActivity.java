@@ -53,12 +53,7 @@ public class SinhvienActivity extends AppCompatActivity {
     private void hienThiDiemSinhVien(String maSV) {
         ArrayList<String> danhSachDiem = new ArrayList<>();
 
-        /*
-         * Bảng liên quan:
-         * Diem.MaSV → SinhVien.MaSV
-         * Diem.MaLopMH → LopMonHoc.MaLopMH
-         * LopMonHoc.MaMH → MonHoc.MaMH
-         */
+
 
         String query = "SELECT MonHoc.TenMH, Diem.DiemQT, Diem.DiemGK, Diem.DiemCK ,Diem.DiemTK , Diem.TrangThai  " +
                 "FROM Diem " +
