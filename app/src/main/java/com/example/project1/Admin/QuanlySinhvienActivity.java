@@ -34,7 +34,7 @@ public class QuanlySinhvienActivity extends AppCompatActivity {
     RadioGroup rgGioiTinh;
     RadioButton rbNam, rbNu;
     Spinner spinnerLop;
-    Button btnThemSV, btnSuaSV, btnXoaSV, btnThoatSV;
+    Button btnThemSV, btnSuaSV, btnXoaSV;
     ListView lvSinhVien;
 
     ArrayList<String> dsSinhVien;
@@ -65,7 +65,6 @@ public class QuanlySinhvienActivity extends AppCompatActivity {
         spinnerLop = findViewById(R.id.spinnerLop);
         btnThemSV = findViewById(R.id.btnThemSV);
         btnSuaSV = findViewById(R.id.btnSuaSV);
-
         btnXoaSV = findViewById(R.id.btnXoaSV);
         lvSinhVien = findViewById(R.id.lvSinhVien);
 
@@ -135,13 +134,13 @@ public class QuanlySinhvienActivity extends AppCompatActivity {
                 userValues.put("Role", "SinhVien");
                 userValues.put("MaSV", maSV);
                 db.insert("NguoiDung", null, userValues);
-                Toast.makeText(this, "✅ Đã tạo tài khoản cho sinh viên!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "✅ Đã tạo tài khoản và thêm sinh viên!", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "⚠️ Tài khoản đã tồn tại!", Toast.LENGTH_SHORT).show();
             }
             checkUser.close();
 
-            Toast.makeText(this, "Thêm sinh viên thành công!", Toast.LENGTH_SHORT).show();
+
             loadSinhVien();
         });
 
@@ -195,12 +194,6 @@ public class QuanlySinhvienActivity extends AppCompatActivity {
             }
         });
 
-        btnThoatSV.setOnClickListener(v -> {
-            Intent intent = new Intent(QuanlySinhvienActivity.this, AdminActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
-        });
     }
 
     private void loadSinhVien() {
