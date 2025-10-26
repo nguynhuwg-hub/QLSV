@@ -92,7 +92,7 @@ public class QuanlyGiangvienActivity extends AppCompatActivity {
                 userValues.put("MaGV", maGV);
                 db.insert("NguoiDung", null, userValues);
 
-                Toast.makeText(this, "Thêm và tài khoản thành công!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Thêm giảng viên và tài khoản thành công!", Toast.LENGTH_SHORT).show();
                 loadGiangVien();
             }
             c.close();
