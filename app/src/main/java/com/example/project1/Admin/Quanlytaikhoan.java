@@ -115,6 +115,8 @@ public class Quanlytaikhoan extends AppCompatActivity {
     private void loadUsernameList() {
         dsUser.clear();
 
+        dsUser.add("-- Những mã chưa có tài khoản --");
+
         // Lấy SV chưa có tài khoản
         Cursor cursorSV = db.rawQuery("SELECT MaSV FROM SinhVien WHERE MaSV NOT IN (SELECT Username FROM NguoiDung)", null);
         while (cursorSV.moveToNext()) {

@@ -102,7 +102,7 @@ public class QuanlySinhvienActivity extends AppCompatActivity {
             String diaChi = edtDiaChi.getText().toString().trim();
             String gt = rbNam.isChecked() ? "Nam" : "Nữ";
 
-            if (maSV.isEmpty() || ten.isEmpty() || selectedLop.isEmpty()) {
+            if (maSV.isEmpty() || ten.isEmpty() || selectedLop.isEmpty() ||  diaChi.isEmpty() || gt.isEmpty() || selectedLop.isEmpty()) {
                 Toast.makeText(this, "Vui lòng nhập đủ thông tin!", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -152,6 +152,12 @@ public class QuanlySinhvienActivity extends AppCompatActivity {
             String diaChi = edtDiaChi.getText().toString().trim();
             String gt = rbNam.isChecked() ? "Nam" : "Nữ";
 
+            if (ma.isEmpty() || ten.isEmpty() || ngaySinh.isEmpty() ||
+                    diaChi.isEmpty() || gt.isEmpty() || selectedLop.isEmpty()) {
+                Toast.makeText(this, "⚠️ Vui lòng nhập đầy đủ thông tin trước khi cập nhật!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             ContentValues values = new ContentValues();
             values.put("HoTen", ten);
             values.put("NgaySinh", ngaySinh);
@@ -177,7 +183,7 @@ public class QuanlySinhvienActivity extends AppCompatActivity {
             loadSinhVien();
         });
 
-        // === HIỂN THỊ DỮ LIỆU LÊN FORM ===
+        // === HIỂN THỊ DỮ LIỆU LÊN LV ===
         lvSinhVien.setOnItemClickListener((parent, view, position, id) -> {
             String[] parts = dsSinhVien.get(position).split(" - ");
             edtMaSV.setText(parts[0]);
