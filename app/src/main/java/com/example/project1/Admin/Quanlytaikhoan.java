@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Quanlytaikhoan extends AppCompatActivity {
 
     EditText edtPassword, edtRole;
-    Button  btnUpdate, btnDelete;
+    Button  btnAdd, btnUpdate, btnDelete;
     ListView listTaiKhoan;
     Spinner spnUsername;
     SQLiteDatabase db;
@@ -32,6 +32,7 @@ public class Quanlytaikhoan extends AppCompatActivity {
         spnUsername = findViewById(R.id.spnUsername);
         edtPassword = findViewById(R.id.edtPassword);
         edtRole = findViewById(R.id.edtRole);
+        btnAdd = findViewById(R.id.btnAdd);
         btnUpdate = findViewById(R.id.btnUpdate);
         btnDelete = findViewById(R.id.btnDelete);
         listTaiKhoan = findViewById(R.id.listTaiKhoan);
@@ -59,6 +60,42 @@ public class Quanlytaikhoan extends AppCompatActivity {
             c.close();
         });
 
+        // Nút thêm tài khoản mới
+        btnAdd.setOnClickListener(v -> {
+            String username = spnUsername.getSelectedItem() != null ? spnUsername.getSelectedItem().toString() : null;
+            String password = edtPassword.getText().toString().trim();
+
+            if (username == null || username.isEmpty()) {
+                Toast.makeText(this, "Vui lòng chọn người dùng!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (password.isEmpty()) {
+                Toast.makeText(this, "Vui lòng nhập mật khẩu!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Xác định role dựa theo bảng
+            String role = "SinhVien";
+            Cursor c1 = db.rawQuery("SELECT MaSV FROM SinhVien WHERE MaSV=?", new String[]{username});
+            if (c1.moveToFirst()) role = "SinhVien";
+            else {
+                Cursor c2 = db.rawQuery("SELECT MaGV FROM GiangVien WHERE MaGV=?", new String[]{username});
+                if (c2.moveToFirst()) role = "GiangVien";
+                c2.close();
+            }
+            c1.close();
+
+            // Thêm vào bảng NguoiDung
+            db.execSQL("INSERT INTO NguoiDung (Username, Password, Role) VALUES (?, ?, ?)",
+                    new Object[]{username, password, role});
+
+            Toast.makeText(this, "Đã thêm tài khoản mới!", Toast.LENGTH_SHORT).show();
+
+            loadData();       // Cập nhật danh sách hiển thị
+            loadUsernameList(); // Cập nhật lại spinner
+            edtPassword.setText("");
+        });
 
 
         // Nút sửa

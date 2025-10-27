@@ -52,18 +52,27 @@
 
 
         <Button
+            android:id="@+id/btnAdd"
+            android:text="Thêm"
             android:backgroundTint="#3DB4E7"
-            android:id="@+id/btnUpdate"
-            android:text="Sửa"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_marginRight="5dp"
             android:layout_height="wrap_content"/>
 
         <Button
+            android:id="@+id/btnUpdate"
+            android:text="Sửa"
             android:backgroundTint="#3DB4E7"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_marginRight="5dp"
+            android:layout_height="wrap_content"/>
+
+        <Button
             android:id="@+id/btnDelete"
             android:text="Xóa"
+            android:backgroundTint="#3DB4E7"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_marginLeft="5dp"
