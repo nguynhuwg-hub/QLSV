@@ -60,7 +60,7 @@ public class Quanlytaikhoan extends AppCompatActivity {
             c.close();
         });
 
-        // Nút thêm tài khoản mới
+        // Nút thêm
         btnAdd.setOnClickListener(v -> {
             String username = spnUsername.getSelectedItem() != null ? spnUsername.getSelectedItem().toString() : null;
             String password = edtPassword.getText().toString().trim();
