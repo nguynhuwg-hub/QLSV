@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Quanlytaikhoan extends AppCompatActivity {
 
     EditText edtPassword, edtRole;
-    Button btnAdd, btnUpdate, btnDelete;
+    Button  btnUpdate, btnDelete;
     ListView listTaiKhoan;
     Spinner spnUsername;
     SQLiteDatabase db;
@@ -114,8 +114,7 @@ public class Quanlytaikhoan extends AppCompatActivity {
     // Load danh sách SV + GV chưa có tài khoản
     private void loadUsernameList() {
         dsUser.clear();
-
-        dsUser.add("-- Những mã chưa có tài khoản --");
+        dsUser.add("           ");
 
         // Lấy SV chưa có tài khoản
         Cursor cursorSV = db.rawQuery("SELECT MaSV FROM SinhVien WHERE MaSV NOT IN (SELECT Username FROM NguoiDung)", null);
